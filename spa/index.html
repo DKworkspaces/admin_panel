@@ -194,17 +194,6 @@ async function formTag(id=null) {await formBuild('view-createtag','tag',id);}
 
 
 
-
-    
-
-
-
-
-
-
-
-
-    
 // A. Core Function: Asynchronously Fetch Data From Your Server API
 async function fetchBlogPosts() {const API_BASE_URL = 'https://jsonplaceholder.typicode.com/todos/';const tbody = document.getElementById('table-body-posts');const headerRow = document.getElementById('table-headers');tbody.innerHTML = `<tr><td colspan="3" class="table-empty-state">Loading latest records...</td></tr>`;const columns = [{ name: "Title" }, { name: "Complete" }, { name: "Control Actions" }];headerRow.innerHTML = columns.map(col => `<th>${col.name}</th>`).join('');try {const response = await fetch(API_BASE_URL);if (!response.ok) {throw new Error(`HTTP network error code returned: ${response.status}`);}const postsData = await response.json();renderTableRows(postsData);} catch (error) {console.error("API Fetch Exception:", error);tbody.innerHTML = `<tr><td colspan="3" class="table-empty-state" style="color:red;"><strong>Failed to Load Content</strong><p>${error.message}. Please check your connection or endpoint configurations.</p></td></tr>`;} }
 // B. Structural Rendering Loop
@@ -216,4 +205,17 @@ async function readRecords(id = null) {const API_BASE_URL = 'https://jsonplaceho
 async function saveRecord(payload, id = null) {const API_BASE_URL = 'https://jsonplaceholder.typicode.com/todos/';const url = id ? `${API_BASE_URL}/${id}` : API_BASE_URL;const method = id ? 'PUT' : 'POST';const res = await fetch(url, {method: method,headers: { 'Content-Type': 'application/json' },body: JSON.stringify(payload)});if (!res.ok) {throw new Error(`Failed to ${id ? 'update' : 'create'} record.`);}return await res.json();}
 async function deleteRecord(id) {const API_BASE_URL = 'https://jsonplaceholder.typicode.com/todos/';const res = await fetch(`${API_BASE_URL}/${id}`, { method: 'DELETE' });if (!res.ok) throw new Error('Failed to delete');return true;}
 function generateFieldHTML(fields) {const isRequired = fields.required ? 'required' : '';if (fields.type === 'checkbox') {return `<div class="field radio-check"><input type="checkbox" name="${fields.id}" value="${fields.id}" ${isRequired}><label>${fields.label}</label></div>`;}else if (fields.type === 'textarea') {return `<div class="field"><label>${fields.label}</label><textarea name="${fields.id}" ${isRequired}></textarea></div>`;}return `<div class="field"><label>${fields.label}</label><input type="${fields.type}" name="${fields.id}" ${isRequired}></div>`;}
-function generateFormWrapperHTML(form, innerFieldsHTML) {const enctypeAttr = form.enctype ? `enctype="${form.enctype}"` : '';return `<form id="${form.id}" action="${form.action}" method="${form.method}" ${enctypeAttr} onsubmit="handleFormSubmit(event)"><h3>${form.title}</h3>${innerFieldsHTML}<button type="submit">${form.submit}</button><button type="reset">Clear Form</butt
+function generateFormWrapperHTML(form, innerFieldsHTML) {const enctypeAttr = form.enctype ? `enctype="${form.enctype}"` : '';return `<form id="${form.id}" action="${form.action}" method="${form.method}" ${enctypeAttr} onsubmit="handleFormSubmit(event)"><h3>${form.title}</h3>${innerFieldsHTML}<button type="submit">${form.submit}</button><button type="reset">Clear Form</button></form>`;}
+async function createBlog(id=null) {const parentView = document.getElementById('view-createblog');if (!parentView) return;const container = parentView.querySelector('.data-table-container');if (!container) return;const formParameters = {id: 'user-profile-form',action: '/api/v1/profile',method: 'POST',title: 'Update Profile Information',submit: 'Save Changes'};const fields = [{ id: 'id', label: 'Id:', type: 'text', required: true },{ id: 'username', label: 'Username:', type: 'text', required: true },{ id: 'email', label: 'Email Address:', type: 'email', required: true }];let rawJoinedContent = fields.map(ele => generateFieldHTML(ele)).join('');container.innerHTML = generateFormWrapperHTML(formParameters, rawJoinedContent);if (id !== null) {try {const singleRecord = await readRecords(id);alert('Record load successfully!');container.querySelector('input[name="id"]').value=singleRecord.id|| id || '';container.querySelector('input[name="username"]').value=singleRecord.username|| '';container.querySelector('input[name="email"]').value=singleRecord.email|| '';} catch (error) {alert('Failed to load existing records!');} }return;}
+// eg
+async function refreshListView() {
+    try {
+        const allRecords = await readRecords();alert('All Records load successfully!');
+        const singleRecord = await readRecords(id);alert('Record load successfully!');
+        const result = await saveRecord(payload, targetId);alert('Record updated successfully!');
+        const response = await saveRecord(payload);alert('New Record added successfully!');
+        await deleteRecord(id);alert('Record deleted successfully!');
+        }
+    catch (err) {console.error(err.message);}
+    }
+</script> <!-- <script src="/global.js"></script> --></body></html>
