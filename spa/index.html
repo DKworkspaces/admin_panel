@@ -90,7 +90,7 @@ const token = localStorage.getItem('SESSION_TOKEN');
 
 
     
-if (!Api_base || !token) {window.location.replace("../");}
+if (!Api_base || !token) {window.location.replace("./../");}
 // Wrap the initial page-load check so it waits for the DOM
 document.addEventListener('DOMContentLoaded', () => {if (window.location.hash) {navigateTo(window.location.hash);}else {window.location.hash = '#home';} });
 
