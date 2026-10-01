@@ -25,7 +25,7 @@ document.getElementById('loginForm').addEventListener('submit', async (e) => {
         const response = await fetch(`${serverUrl}/login`, {method: 'POST',headers: { 'Content-Type': 'application/json' },body: JSON.stringify(payload)});
         const data = await response.json();
         if (response.ok) {localStorage.setItem('ADMIN_BACKEND_URL', serverUrl);localStorage.setItem('SESSION_TOKEN', data.token);
-window.location.href = "spa.html";
+window.location.href = "spa/";
         } else {alert(data.detail || "Invalid entries match.");}
     } catch (err) {alert("Target runtime environment could not be processed. Verify your 4-hour Action state is active.");}
 });
