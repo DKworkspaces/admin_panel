@@ -1,0 +1,54 @@
+/* Layout Blueprint */
+body { font-family:"Segoe UI",Roboto,sans-serif;margin:0;padding:0;color:#333;background-color:#fafafa;display:flex;min-height:100vh}
+/* Sidebar Component */
+.link-container {display:flex;flex-direction:column;gap:20px;justify-content:center;align-items:center;font-family:Roboto, sans-serif;padding:20px}
+.sidebar {width:240px;background:#fff;border-right:1px solid #e2e8f0;padding:24px 16px;box-sizing:border-box}
+.sidebar h2 {font-size:18px;margin:0 0 24px 0;color:#111;}
+.sidebar nav {display:flex;flex-direction:column;gap:8px}
+.sidebar a {display:block;padding:10px 14px;color:#4a5568;text-decoration:none;border-bottom:2px solid transparent;border-radius:6px;font-size:14px;font-weight:500;transition:all 0.2s}
+.sidebar a:hover {background:#f7fafc;color:#0066cc}
+.sidebar a.active {background:#e6f0fa;color:#0066cc;font-weight:600}
+/* Content Frame & Form Fields */
+.main-content {flex:1;padding:40px;max-width:600px;}
+.spa-view{display:none;opacity:0;transform:translateY(10px);transition:opacity 0.3s ease, transform 0.3s ease}
+.spa-view.active {display:block;opacity:1;transform:translateY(0)}
+
+form {background:#fff;padding:24px;border:1px solid #e2e8f0;border-radius:8px;display:flex;flex-direction:column;gap:16px;box-shadow:0 1px 3px rgba(0,0,0,0.05)}
+form h3 {margin:0 0 8px 0;color:#111;border-bottom:1px solid #edf2f7;padding-bottom:8px}
+.field {display:flex;flex-direction:column;gap:6px}
+label {font-weight:600;font-size:13px;color:#4a5568}
+input,select,textarea {width:100%;padding:10px;border:1px solid #cbd5e0;border-radius:5px;box-sizing:border-box;font-size:14px}
+input:focus,select:focus,textarea:focus {outline:none;border-color:#0066cc}
+textarea {resize:vertical}
+button {background:#0066cc;color:white;padding:12px;border:none;border-radius:5px;font-weight:bold;font-size:14px;cursor:pointer;margin-top:8px}
+button:hover {background: #0052a3}
+/* Management Tables styling */
+.data-table-container {background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,0.05);margin-top:30px}
+.data-table-container h3 {margin:0 0 16px 0;color:#111}
+table {width:100%;border-collapse:collapse;text-align:left;font-size:14px}
+th, td {padding:12px;border-bottom:1px solid #edf2f7}
+th {background-color:#f7fafc;font-weight:600;color:#4a5568}
+tr:hover {background-color:#f8fafc}
+/* Action Buttons */
+.actions {display:flex;gap:8px}
+.btn-container {display:flex;gap:12px;justify-content:center;align-items:center;font-family:Roboto, sans-serif}
+.btn {padding:6px 12px;font-size:14px;font-weight:600;border:none;border-radius:4px;cursor:pointer;transition:all 0.2s ease-in-out;outline:none;text-decoration:none}
+.btn-logout {background-color:#f3f4f6;color:#374151;border:1px solid #d1d5db}
+.btn-logout:hover {background-color:#e5e7eb;color:#111827;transform:translateY(-1px)}
+.btn-logout:active {background-color:#d1d5db;transform:translateY(0)}
+.btn-exit {background-color:#ef4444;color:#fff}
+.btn-exit:hover {background-color:#dc2626;box-shadow:0 4px 12px rgba(239, 68, 68, 0.2);transform:translateY(-1px)}
+.btn-exit:active {background-color:#b91c1c;transform:translateY(0)}
+.btn-edit {background:#e6f0fa;color:#0066cc}
+.btn-edit:hover {background:#d0e4f7}
+.btn-edit:active {background:#b8d7f2}
+.btn-delete {background:#fff5f5;color:#e53e3e;padding:6px 12px;border:1px solid #fed7d7}
+.btn-delete:hover {background:#fed7d7}
+.btn-delete:active {background:#fca5a5;border-color:#fca5a5}
+
+/* Create New Post Button Styling */
+.btn-create-new {background-color:#4f46e5;color:#fff;padding:10px 18px;font-size:14px;border-radius:6px;cursor:pointer;text-decoration:none;font-weight:600;display:inline-flex;align-items:center;gap:6px;transition:background-color 0.15s ease, transform 0.1s ease;box-shadow:0 1px 2px rgba(0, 0, 0, 0.05)}
+.btn-create-new:hover {background-color:#4338ca}
+.btn-create-new:active {transform:scale(0.98)}
+/* Inline form styling for delete operations */
+.delete-form {display:inline;padding:0;border:none;box-shadow:none;background:transparent;margin:0;}
