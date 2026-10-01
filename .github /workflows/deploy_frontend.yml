@@ -4,6 +4,7 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+
 permissions:
   contents: read
   pages: write
@@ -27,10 +28,10 @@ jobs:
       - name: Setup GitHub Pages Environment
         uses: actions/configure-pages@v5
 
-      - name: Upload Frontend Folder as Web Artifacts
+      - name: Upload Root Folder as Web Artifacts
         uses: actions/upload-pages-artifact@v3
         with:
-          # Tells GitHub Actions to deploy only the contents of your frontend directory
+          # Deploys everything from the root folder instead of just the frontend folder
           path: '.'
 
       - name: Deploy to GitHub Pages Live Link
