@@ -2,13 +2,8 @@ name: Deploy Frontend Pages to GitHub Pages
 
 on:
   push:
-    branches:
-      - Db
-    paths:
-      - 'frontend/**' # Triggers only when changes are made inside the frontend folder
-  workflow_dispatch: # Allows you to trigger this deployment manually if needed
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+    branches: [main]
+  workflow_dispatch:
 permissions:
   contents: read
   pages: write
@@ -36,7 +31,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # Tells GitHub Actions to deploy only the contents of your frontend directory
-          path: './frontend'
+          path: '.'
 
       - name: Deploy to GitHub Pages Live Link
         id: deployment
