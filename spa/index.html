@@ -158,10 +158,14 @@ function generateForm(form, Fields) {const enctypeAttr = form.enctype ? `enctype
 //form functions
 function homeEle(id){const parentView = document.getElementById(id);if (!parentView) return;return parentView.querySelector('.data-table-container');}
 async function genform(fields,form, container,url,id=null){let rawcont= fields.map(ele => generateField(ele)).join('');container.innerHTML = generateForm(form, rawcont);if (id !== null) {try {const sr = await apiRead(url,id);fields.forEach(field => {container.querySelector(`input[name="${field.id}"]`).value=sr[field.id] ?? (field.id === 'id' ? id : '');});alert('Record load successfully!');} catch (error) {alert('Failed to load existing records!');} } }
+
+    
+    
+const requestHeaders = {"Bypass-Tunnel-Reminder":"true","Content-Type":"application/json"};
 //api based functionality
-async function apiRead(url,id = null) {const urli = id ? `${Api_base}/${url}/${id}` : `${Api_base}/${url}`;const res = await fetch(urli);if (!res.ok) {throw new Error(id ? `Failed to read database record payload for ID: ${id}` : 'Database server returned connection error status.');}return await res.json();}
-async function apiSave(payload,url, id = null) {const urli = id ? `${Api_base}/${url}/${id}` : `${Api_base}/${url}`;const res = await fetch(urli, {method: id ? 'PUT' : 'POST',headers: { 'Content-Type': 'application/json' },body: JSON.stringify(payload)});if (!res.ok) {throw new Error(`Failed to ${id ? 'update' : 'create'} record.`);}return await res.json();}
-async function apiDelete(url,id) {const urli = id ? `${Api_base}/${url}/${id}` : `${Api_base}/${url}`;const res = await fetch(urli, { method: 'DELETE' });if (!res.ok) throw new Error('Failed to delete');return true;}
+async function apiRead(url,id = null) {const urli = id ? `${Api_base}/${url}/${id}` : `${Api_base}/${url}`;const res = await fetch(urli, {method: "GET",headers: requestHeaders});if (!res.ok) {throw new Error(id ? `Failed to read database record payload for ID: ${id}` : 'Database server returned connection error status.');}return await res.json();}
+async function apiSave(payload,url, id = null) {const urli = id ? `${Api_base}/${url}/${id}` : `${Api_base}/${url}`;const res = await fetch(urli, {method: id ? 'PUT' : 'POST',headers: requestHeaders,body: JSON.stringify(payload)});if (!res.ok) {throw new Error(`Failed to ${id ? 'update' : 'create'} record.`);}return await res.json();}
+async function apiDelete(url,id) {const urli = id ? `${Api_base}/${url}/${id}` : `${Api_base}/${url}`;const res = await fetch(urli, { method: 'DELETE',headers: requestHeaders});if (!res.ok) throw new Error('Failed to delete');return true;}
 //listing all control functions
 async function listTable(headcl,tablecl,type){const tb = buildTableHead(headcl,tablecl,fields[type]);try {const lst = await apiRead(apiRoutes[type]);renderRows(tb,lst,type);}catch (error) {tb.innerHTML = `<tr><td colspan="3" class="table-empty-state" style="color:red;"><strong>Failed to Load Content</strong><p>${error.message}. Please check your connection or endpoint configurations.</p></td></tr>`;} }
 async function formBuild(home_ele,type,id=null){const container = homeEle(home_ele);if (!container) return;await genform(fields[type],id != null ? updateforms[type] : forms[type],container,apiRoutes[type],id);return;}
